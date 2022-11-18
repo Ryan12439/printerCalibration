@@ -5,6 +5,7 @@ defSpeed = 3000 # Speed to move toolhead in mm/s
 defHome = True # Whether to home the toolhead before calibration
 defHomeAtEnd = True # Wheater to home after calibration done
 defDisableMotors = False # Disable motors at file finish
+defOverwrite = False # Whether to overwrite the file if it already exists
 
 gcode = {
     "MOVE": "G1",
@@ -14,17 +15,35 @@ gcode = {
     "DISABLE_MOTORS": "M84"
 }
 
-def compile(fileName: str, levelLocationsX: list[int], levelLocationsY: list[int], dwell: int = defDwell, speed: int = defSpeed, home: bool = defHome, homeAtEnd: bool = defHomeAtEnd, zHeight: float = defZ, zMove: float = defZMove, disableMotors: bool = defDisableMotors) -> str:
+def compile(fileName: str, levelLocationsX: list[int], levelLocationsY: list[int], dwell: int = defDwell, speed: int = defSpeed, home: bool = defHome, homeAtEnd: bool = defHomeAtEnd, zHeight: float = defZ, zMove: float = defZMove, disableMotors: bool = defDisableMotors, overwrite: bool = defOverwrite) -> str:
     file = None
 
     try:
-        file = open(f'{fileName}.gcode', "x")
-    except:
-        print("Error, the file specified already exists.")
+        if overwrite:
+            file = open(f'{fileName}.gcode', 'w')
+        else:
+            file = open(f'{fileName}.gcode', "x")
+    except FileExistsError:
+        print("Error, the file specified already exists. Please specify a different file name or enable overwrite.")
         exit()
 
     
-    output = [gcode["ABSOLUTE_POS"]] # Set to absolute positioning mode
+    output = [
+        f'; {fileName}',
+        f'; Leveling locations X: {levelLocationsX}',
+        f'; Leveling locations Y: {levelLocationsY}',
+        f'; Dwell time: {dwell}',
+        f'; Speed: {speed}',
+        f'; Home before calibration: {home}',
+        f'; Home after calibration: {homeAtEnd}',
+        f'; Z height: {zHeight}',
+        f'; Z move height: {zMove}',
+        f'; Disable motors at end: {disableMotors}',
+        '',
+        ''
+    ]
+
+    output.append(gcode["ABSOLUTE_POS"]) # Set to absolute positioning mode
 
     if (home):
         output.append(gcode["HOME_ALL"]) # Home all axis
@@ -50,7 +69,3 @@ def compile(fileName: str, levelLocationsX: list[int], levelLocationsY: list[int
     file.close()
 
     print(f'File has been sucessfully created! Located at {fileName}.gcode')
-
-
-
-compile("Ender3Pro", [32, 202], [36, 206])
