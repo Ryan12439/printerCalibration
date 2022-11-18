@@ -7,7 +7,7 @@
 ; Home after calibration: True
 ; Z height: 5.8
 ; Z move height: 8
-; Disable motors at end: False
+; Disable motors at end: True
 
 
 G90
@@ -30,3 +30,4 @@ G1 Z5.8
 G4 P15000
 G1 Z8
 G28
+M84

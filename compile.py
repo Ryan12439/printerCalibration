@@ -4,7 +4,7 @@ defDwell = 15 # Seconds to stay at each location
 defSpeed = 3000 # Speed to move toolhead in mm/s
 defHome = True # Whether to home the toolhead before calibration
 defHomeAtEnd = True # Wheater to home after calibration done
-defDisableMotors = False # Disable motors at file finish
+defDisableMotors = True # Disable motors at file finish
 defOverwrite = False # Whether to overwrite the file if it already exists
 
 gcode = {
