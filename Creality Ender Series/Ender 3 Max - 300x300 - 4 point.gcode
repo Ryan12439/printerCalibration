@@ -1,4 +1,4 @@
-; Creality Ender Series/Ender 3 Max - 330x330 - 4 point
+; Creality Ender Series/Ender 3 Max - 300x300 - 4 point
 ; Leveling locations X: [32, 270]
 ; Leveling locations Y: [29, 270]
 ; Dwell time: 15
