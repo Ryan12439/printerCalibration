@@ -1,4 +1,4 @@
-; Creality Ender Series/Ender 2 - 150x150 - 4 point
+; Creality Ender Series/Ender 2 Pro - 165x165 - 4 point
 ; Leveling locations X: [30, 140]
 ; Leveling locations Y: [30, 130]
 ; Dwell time: 15
